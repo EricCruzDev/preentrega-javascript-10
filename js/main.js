@@ -7,13 +7,50 @@ class Producto {
     }
 }
 
-const productosIniciales = [
-    new Producto("Pan", 1500, "Alimentos", 10),
-    new Producto("Leche", 1200, "Lácteos", 8),
-    new Producto("Arroz", 1800, "Alimentos", 15)
-];
+let productos = [];
 
-let productos = JSON.parse(localStorage.getItem("productos")) ?? productosIniciales;
+function mostrarToast(mensajeTexto, colorFondo = "#1769aa") {
+    Toastify({
+        text: mensajeTexto,
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        style: {
+            background: colorFondo
+        }
+    }).showToast();
+}
+
+async function cargarProductosIniciales() {
+    const productosGuardados = localStorage.getItem("productos");
+
+    if (productosGuardados) {
+        productos = JSON.parse(productosGuardados);
+        mostrarProductos(productos);
+    } else {
+        try {
+            listaProductos.innerHTML = "<p>Cargando productos...</p>";
+
+            const response = await fetch("./data/productos.json");
+
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+
+            const data = await response.json();
+            productos = data.map(({ nombre, precio, categoria, stock }) => new Producto(nombre, precio, categoria, stock));
+
+            guardarStorage();
+            cargarProductosIniciales();
+            mostrarToast("✔️ Productos cargados con éxito desde el JSON local", "#2e7d32");
+
+        } catch (error) {
+            console.error("Error al obtener los datos:", error.message);
+            listaProductos.innerHTML = "<p>⚠️ Error al cargar los productos iniciales.</p>";
+            mostrarToast("❌ Error al cargar productos por defecto", "#d32f2f");
+        }
+    }
+}
 
 function guardarStorage() {
     localStorage.setItem("productos", JSON.stringify(productos));
@@ -85,11 +122,12 @@ formularioProducto.addEventListener("submit", (event) => {
 
         mensaje.textContent = "✔️ Producto agregado correctamente.";
         mensaje.style.color = "#2e7d32";
+        mostrarToast("✔️ Producto agregado al inventario", "#2e7d32");
 
     } catch (error) {
-        // Captura y muestra el mensaje de error definido en el throw
         mensaje.textContent = `⚠️ ${error.message}`;
         mensaje.style.color = "#d32f2f";
+        mostrarToast(`⚠️ ${error.message}`, "#d32f2f");
 
     } finally {
         // Se ejecuta SIEMPRE al terminar el bloque, haya o no error
@@ -106,8 +144,9 @@ function eliminarProducto(nombreEliminar) {
 
         guardarStorage();
 
-        mostrarProductos(productos);
+       mostrarProductos(productos);
         mensaje.textContent = "Producto eliminado correctamente.";
+        mostrarToast("🗑️ Producto eliminado correctamente", "#d32f2f");
     }
 }
 
