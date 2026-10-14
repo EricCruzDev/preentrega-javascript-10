@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="./js/main.js" defer></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Pre entrega js diez</title>
+</head>
+
+
+<body>
+
+    <header>
+        <h1>Simulador de Productos</h1>
+        <p>Gestioná tus productos de forma dinámica</p>
+    </header>
+
+    <main>
+
+        <section id="bannerNotificacion" class="notificacion-oculta">
+            <p id="textoNotificacion"></p>
+        </section>
+
+        <section class="formulario">
+            <h2>Agregar producto</h2>
+
+            <form id="formularioProducto">
+
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" required>
+                </div>
+
+                <div class="campo">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" required>
+                </div>
+
+                <div class="campo">
+                    <label for="categoria">Categoría</label>
+                    <input type="text" id="categoria" required>
+                </div>
+
+                <div class="campo">
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" required>
+                </div>
+
+                <button type="submit">Agregar producto</button>
+
+            </form>
+        </section>
+
+        <section class="busqueda">
+            <h2>Buscar producto</h2>
+
+            <input type="text" id="buscador" placeholder="Escribí el nombre del producto">
+        </section>
+
+        <section class="productos">
+            <h2>Productos</h2>
+
+            <div id="listaProductos" class="lista-productos"></div>
+        </section>
+
+        <section class="feedback">
+            <p id="mensaje"></p>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Pre-entrega 10 - JavaScript</p>
+    </footer>
+
+</body>
+
+</html>

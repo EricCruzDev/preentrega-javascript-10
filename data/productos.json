@@ -1,0 +1,20 @@
+[
+    {
+        "nombre": "Pan",
+        "precio": 1500,
+        "categoria": "Alimentos",
+        "stock": 10
+    },
+    {
+        "nombre": "Leche",
+        "precio": 1200,
+        "categoria": "Lacteos",
+        "stock": 8
+    },
+    {
+        "nombre": "Arroz",
+        "precio": 1800,
+        "categoria": "Alimentos",
+        "stock": 15
+    }
+]
